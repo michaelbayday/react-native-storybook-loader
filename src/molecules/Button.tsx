@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import variants, { ButtonVariants } from './variants';
 
@@ -24,16 +24,14 @@ interface IButton {
   buttonStyle?: React.CSSProperties;
   variant: ButtonVariants;
   concealed?: boolean;
+  hovered?: boolean;
 }
 
 const StyledButton = styled.TouchableOpacity.attrs((props: IButton) => ({
   style: {
     ...props.buttonStyle,
-    'font-family': 'Arial',
   },
 }))<IButton>`
-  /* button overwrites */
-  outline: none;
   /* button overwrites */
   height: 56px;
   display: flex;
@@ -46,10 +44,10 @@ const StyledButton = styled.TouchableOpacity.attrs((props: IButton) => ({
   line-height: 24px;
   border-radius: 8px;
   cursor: pointer;
-  background: ${(props) => variants[props.variant].background.default};
-  color: ${(props) => variants[props.variant].color};
+  background: ${(props) =>  props.hovered ?  variants[props.variant].background.default : 'pink'};
+  color: ${(props) => variants[props.variant].color };
   border: ${(props) => variants[props.variant].border.default};
-  opacity: ${(props) => (props.concealed ? 0.2 : 1)};
+  opacity: ${(props) => props.hovered ? 0.2 : 1};
 `;
 
 const StyledContent = styled.View`
@@ -70,6 +68,7 @@ const Button: React.FC<IProps> & { Variants: typeof ButtonVariants } = ({
   onClick,
   variant = ButtonVariants.Primary,
 }) => {
+  const [hovered, setHover] = useState(false);
   return (
     <StyledButton
       aria-label={ariaLabel}
@@ -79,7 +78,10 @@ const Button: React.FC<IProps> & { Variants: typeof ButtonVariants } = ({
       concealed={disabled}
       onPress={onClick}
       accessibilityLabel="testbutton"
-      accessibilityRole="testbutton"
+      accessibilityRole="button"
+      hovered={hovered}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
       <StyledContent>
         {children}
