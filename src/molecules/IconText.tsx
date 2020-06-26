@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 // @ts-ignore
 import Icon from '@expo/vector-icons/MaterialIcons';
+
+const StyledText = styled.Text`
+color: palevioletred;
+`;
 
 const styles = StyleSheet.create({
   container: {
@@ -26,13 +31,12 @@ const IconText: React.FC<Props> = ({
   icon,
   children,
   iconColor = 'dodgerBlue',
-  textColor = 'gray',
 }: Props): JSX.Element => (
   <View style={styles.container}>
     <View style={styles.iconContainer}>
       <Icon name={icon} color={iconColor} />
     </View>
-    <Text style={{ color: textColor }}>{children}</Text>
+    <StyledText>{children}</StyledText>
   </View>
 );
 

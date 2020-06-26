@@ -8,7 +8,6 @@ function loadStories() {
 addParameters({
   viewport: {
     viewports: INITIAL_VIEWPORTS,
-    defaultViewport: "iphone5"
   },
   options: {
     addonPanelInRight: true
